@@ -35,8 +35,6 @@ antin = []
 # entanglement matrices
 
 
-
-
 # parse the file event by event
 for iev, event in enumerate(F):
 
@@ -59,12 +57,12 @@ for iev, event in enumerate(F):
         bool_lep = part.pid==11 or part.pid==13 or part.pid==15
         if bool_lep:
             lep_momenta.append(lhe_parser.FourMomentum(part))
+        # CHECK WHETHER EVERY EVENT HAS EVERY PARTICLE ABOVE IN IT
 
     #############################################################
     # BOOST IN THE C.O.M.F. OF tt~
     # comf
-    t_antit_sum.append(top_momenta[iev])
-    t_antit_sum[iev]+=antitop_momenta[iev]
+    t_antit_sum.append(top_momenta[iev]+antitop_momenta[iev])
     # boosts
     top_momenta[iev] = top_momenta[iev].boost_to_restframe(t_antit_sum[iev])
     antitop_momenta[iev] = antitop_momenta[iev].boost_to_restframe(t_antit_sum[iev])
@@ -83,7 +81,7 @@ for iev, event in enumerate(F):
     ## orthogonal to k and r
     n.append(np.cross(k[iev],r[iev]))
 
-    #############################################################
+    ##############
     # BOOST IN THE C.O.M.F. OF SINGLE t / SINGLE t~
     antilep_momenta[iev] = antilep_momenta[iev].boost_to_restframe(top_momenta[iev])
     lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(antitop_momenta[iev])
