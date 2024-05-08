@@ -63,6 +63,9 @@ for iev, event in enumerate(F):
     # BOOST IN THE C.O.M.F. OF tt~
     # comf
     t_antit_sum.append(top_momenta[iev]+antitop_momenta[iev])
+    print(t_antit_sum[iev])
+    print(top_momenta[iev])
+    print(antitop_momenta[iev])
     # boosts
     top_momenta[iev] = top_momenta[iev].boost_to_restframe(t_antit_sum[iev])
     antitop_momenta[iev] = antitop_momenta[iev].boost_to_restframe(t_antit_sum[iev])
@@ -70,8 +73,7 @@ for iev, event in enumerate(F):
     lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(t_antit_sum[iev])
     # DEFINE HELICITY BASIS
     ## beam direction
-    p.append(np.array([t_antit_sum[iev].px, t_antit_sum[iev].py, t_antit_sum[iev].pz]))
-    p[iev] = p[iev]/math.sqrt(np.inner(p[iev], p[iev])) # normalization
+    p.append(np.array([0,0,1]))
     ## top direction
     k.append(np.array([top_momenta[iev].px, top_momenta[iev].py, top_momenta[iev].pz]))
     k[iev] = k[iev]/np.linalg.norm(k[iev]) # normalization
