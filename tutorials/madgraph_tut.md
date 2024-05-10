@@ -34,7 +34,7 @@
               <totfact> 0.26611858E+04</totfact>                
               </mgrwt>  
 
-          </head>
+  </head>
 
 
 
