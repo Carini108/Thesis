@@ -11,7 +11,9 @@
 
 <event> <br />
 #particles12      1=d +2.2752800e+01 2.18028500e+02 7.54677100e-03 1.13631900e-01  
-21        -1    0    0  503  502 +0.0000000000e+00 +0.0000000000e+00 +1.0553638102e+02 1.0553638102e+02 0.0000000000e+00 0.0000e+00 -1.0000e+00  
+
+       21 -1    0    0  503  502 +0.0000000000e+00 +0.0000000000e+00 +1.0553638102e+02 1.0553638102e+02 0.0000000000e+00 0.0000e+00 -1.0000e+00  
+       
        21 -1    0    0  501  503 -0.0000000000e+00 -0.0000000000e+00 -6.5866818640e+02 6.5866818640e+02 0.0000000000e+00 0.0000e+00 1.0000e+00  
         6  2    1    2  501    0 +1.2066017443e+01 -1.3269389022e+02 -4.9880426120e+02 5.4437313907e+02 1.7257800054e+02 0.0000e+00 0.0000e+00  
         24 2    3    3    0    0 -2.8691059218e+01 -1.4415203949e+02 -4.4749300375e+02 4.7768458215e+02 7.9558684337e+01 0.0000e+00 0.0000e+00  
@@ -31,6 +33,6 @@
 <totfact> 0.26611858E+04</totfact>  
 </mgrwt>  
 
-* In every directory of `RESULTS` produced by `madgraph`, there is also a parser, called `lhe_parser.py`, which is a python library tailored for `.lhe` files.
-  Each event, is
+* In every directory of `RESULTS` produced by `madgraph`, there is also a parser, called `lhe_parser.py`, which is a python library tailored for `.lhe` files.  
+  Each event is a list of particles, identified by the first number in each row (see `number_scheme_montecarlorpp.pdf`), each of which has defined properties, like four-momentum and mass.
 
