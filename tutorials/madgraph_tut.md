@@ -8,7 +8,7 @@
 
 * A Les Houches Events format will look somewhat like this:
 
-`<event>
+<event>
 #particles12      1=d +2.2752800e+01 2.18028500e+02 7.54677100e-03 1.13631900e-01  
 21        -1    0    0  503  502 +0.0000000000e+00 +0.0000000000e+00 +1.0553638102e+02 1.0553638102e+02 0.0000000000e+00 0.0000e+00 -1.0000e+00  
        21 -1    0    0  501  503 -0.0000000000e+00 -0.0000000000e+00 -6.5866818640e+02 6.5866818640e+02 0.0000000000e+00 0.0000e+00 1.0000e+00  
@@ -28,6 +28,6 @@
 <pdfrwt beam="1">  1       21 0.16236366E-01 0.21802849E+03</pdfrwt>  
 <pdfrwt beam="2">  1       21 0.10133357E+00 0.21802849E+03</pdfrwt>  
 <totfact> 0.26611858E+04</totfact>  
-</mgrwt>  `
+</mgrwt>  
 
 * In every directory of `RESULTS` produced by 
