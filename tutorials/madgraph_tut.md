@@ -9,11 +9,11 @@
 
 * A Les Houches Events format will look somewhat like this:
 
-<event> <br />
-#particles12      1=d +2.2752800e+01 2.18028500e+02 7.54677100e-03 1.13631900e-01  
+`<event> <br /> `
+
+` #particles12      1=d +2.2752800e+01 2.18028500e+02 7.54677100e-03 1.13631900e-01`
 
        21 -1    0    0  503  502 +0.0000000000e+00 +0.0000000000e+00 +1.0553638102e+02 1.0553638102e+02 0.0000000000e+00 0.0000e+00 -1.0000e+00  
-       
        21 -1    0    0  501  503 -0.0000000000e+00 -0.0000000000e+00 -6.5866818640e+02 6.5866818640e+02 0.0000000000e+00 0.0000e+00 1.0000e+00  
         6  2    1    2  501    0 +1.2066017443e+01 -1.3269389022e+02 -4.9880426120e+02 5.4437313907e+02 1.7257800054e+02 0.0000e+00 0.0000e+00  
         24 2    3    3    0    0 -2.8691059218e+01 -1.4415203949e+02 -4.4749300375e+02 4.7768458215e+02 7.9558684337e+01 0.0000e+00 0.0000e+00  
@@ -25,14 +25,39 @@
        13  1    6    6    0    0 +1.3042126651e+01 -5.4560017190e+00 -8.5906056214e+00 1.6542778705e+01 0.0000000000e+00 0.0000e+00 -1.0000e+00  
       -14  1    6    6    0    0 -1.9823575018e+01 +1.1122939263e+02 +3.4684962185e+01 1.1818628733e+02 0.0000000000e+00 0.0000e+00 1.0000e+00  
        -5  1    5    5    0  502 -5.2845690758e+00 +2.6920499316e+01 -8.0421900735e+01 8.5102362315e+01 4.7000000000e+00 0.0000e+00 1.0000e+00  
-<mgrwt>  
-<rscale>  2 0.21676356E+03</rscale>  
-<asrwt>0</asrwt>  
-<pdfrwt beam="1">  1       21 0.16236366E-01 0.21802849E+03</pdfrwt>  
-<pdfrwt beam="2">  1       21 0.10133357E+00 0.21802849E+03</pdfrwt>  
-<totfact> 0.26611858E+04</totfact>  
-</mgrwt>  
+       
+`<mgrwt>  `
+       
+`<rscale>  2 0.21676356E+03</rscale>  `
+
+`<asrwt>0</asrwt>  `
+
+`<pdfrwt beam="1">  1       21 0.16236366E-01 0.21802849E+03</pdfrwt>  `
+
+`<pdfrwt beam="2">  1       21 0.10133357E+00 0.21802849E+03</pdfrwt>  `
+
+`<totfact> 0.26611858E+04</totfact>  `
+
+`</mgrwt>  `
+
 
 * In every directory of `RESULTS` produced by `madgraph`, there is also a parser, called `lhe_parser.py`, which is a python library tailored for `.lhe` files.  
-  Each event is a list of particles, identified by the first number in each row (see `number_scheme_montecarlorpp.pdf`), each of which has defined properties, like four-momentum and mass.
+  Each event is a list of particles, identified by the first number in each row (see `number_scheme_montecarlorpp.pdf`), each of which has defined properties, like four-momentum and mass. For example, 6 stands for a top quark $t$ and -13 is an anti-muon $\mu^+$.
+
+
+  `#    (?P<pid>-?\d+)\s+           #PID`
+   `#    (?P<status>-?\d+)\s+            #status (1 for output particle)`
+    `#    (?P<mother1>-?\d+)\s+       #mother`
+    `#    (?P<mother2>-?\d+)\s+       #mother`
+    `#    (?P<color1>[+-e.\d]*)\s+    #color1`
+    `#    (?P<color2>[+-e.\d]*)\s+    #color2`
+    `#    (?P<px>[+-e.\d]*)\s+        #px`
+    `#    (?P<py>[+-e.\d]*)\s+        #py`
+    `#    (?P<pz>[+-e.\d]*)\s+        #pz`
+    `#    (?P<E>[+-e.\d]*)\s+         #E`
+    `#    (?P<mass>[+-e.\d]*)\s+      #mass`
+    `#    (?P<vtim>[+-e.\d]*)\s+      #displace vertex`
+    `#    (?P<helicity>[+-e.\d]*)\s*      #helicity`
+    `#    ($|(?P<comment>\#[\d|D]*))  #comment/end of string`
+    `#    ''',66) #verbose+ignore case`
 
