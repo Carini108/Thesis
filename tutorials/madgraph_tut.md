@@ -2,6 +2,7 @@
 
 ### [Madgraph homepage](http://madgraph.phys.ucl.ac.be/index.html)
 ### [](https://www.niu.edu/spmartin/madgraph/)
+### [Turorial](https://www.niu.edu/spmartin/madgraph/madtutor.html)
 ### [Syntax](https://www.niu.edu/spmartin/madgraph/madsyntax.html)
 
 ## LHE event file
@@ -30,4 +31,6 @@
 <totfact> 0.26611858E+04</totfact>  
 </mgrwt>  
 
-* In every directory of `RESULTS` produced by 
+* In every directory of `RESULTS` produced by `madgraph`, there is also a parser, called `lhe_parser.py`, which is a python library tailored for `.lhe` files.
+  Each event, is
+
