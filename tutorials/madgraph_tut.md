@@ -7,7 +7,7 @@
 
 ## LHE event file
 
-* A Les Houches Events format will look somewhat like this:
+* A Les Houches Events formatted will contain many blocks that look somewhat like this:
 
   
   <head>
@@ -41,20 +41,21 @@
 * In every directory of `RESULTS` produced by `madgraph`, there is also a parser, called `lhe_parser.py`, which is a python library tailored for `.lhe` files.  
   Each event is a list of particles, identified by the first number in each row (see `number_scheme_montecarlorpp.pdf`), each of which has defined properties, like four-momentum and mass. For example, 6 stands for a top quark $t$ and -13 is an anti-muon $\mu^+$.
 
-
-  `#    (?P<pid>-?\d+)\s+           #PID`
-   `#    (?P<status>-?\d+)\s+            #status (1 for output particle)`
-    `#    (?P<mother1>-?\d+)\s+       #mother`
-    `#    (?P<mother2>-?\d+)\s+       #mother`
-    `#    (?P<color1>[+-e.\d]*)\s+    #color1`
-    `#    (?P<color2>[+-e.\d]*)\s+    #color2`
-    `#    (?P<px>[+-e.\d]*)\s+        #px`
-    `#    (?P<py>[+-e.\d]*)\s+        #py`
-    `#    (?P<pz>[+-e.\d]*)\s+        #pz`
-    `#    (?P<E>[+-e.\d]*)\s+         #E`
-    `#    (?P<mass>[+-e.\d]*)\s+      #mass`
-    `#    (?P<vtim>[+-e.\d]*)\s+      #displace vertex`
-    `#    (?P<helicity>[+-e.\d]*)\s*      #helicity`
-    `#    ($|(?P<comment>\#[\d|D]*))  #comment/end of string`
-    `#    ''',66) #verbose+ignore case`
+  <head>
+    #    (?P<pid>-?\d+)\s+           #PID
+     #    (?P<status>-?\d+)\s+            #status (1 for output particle)
+      #    (?P<mother1>-?\d+)\s+       #mother
+      #    (?P<mother2>-?\d+)\s+       #mother
+      #    (?P<color1>[+-e.\d]*)\s+    #color1
+      #    (?P<color2>[+-e.\d]*)\s+    #color2
+      #    (?P<px>[+-e.\d]*)\s+        #px
+      #    (?P<py>[+-e.\d]*)\s+        #py
+      #    (?P<pz>[+-e.\d]*)\s+        #pz
+      #    (?P<E>[+-e.\d]*)\s+         #E
+      #    (?P<mass>[+-e.\d]*)\s+      #mass
+      #    (?P<vtim>[+-e.\d]*)\s+      #displace vertex
+      #    (?P<helicity>[+-e.\d]*)\s*      #helicity
+      #    ($|(?P<comment>\#[\d|D]*))  #comment/end of string
+      #    ''',66) #verbose+ignore case
+  </head>
 
