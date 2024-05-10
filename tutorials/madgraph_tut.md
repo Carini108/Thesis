@@ -7,7 +7,7 @@
 
 ## LHE event file
 
-* In every directory of `RESULTS` produced by `madgraph`, there is also a parser, called `lhe_parser.py`, which is a python library tailored for `.lhe` files.  
+* In every directory `RESULTS` produced by a simulation of `madgraph`, there is also a parser, called `RESULTS/bin/internal/lhe_parser.py`, which is a python library tailored for `.lhe` files.  
   Each event is a list of particles, identified by the first number in each row (see `number_scheme_montecarlorpp.pdf`), each of which has defined properties, like four-momentum and mass. For example, 6 stands for a top quark $t$ and -13 is an anti-muon $\mu^+$. The full legend, taken from the embedded parser, is:
 
   <head>
@@ -30,7 +30,7 @@
 
   </head>
 
-  * A Les Houches Events formatted will contain many blocks that look somewhat like this:
+  * A Les Houches Events formatted file will contain many blocks that look somewhat like this:
   
   <head>
          
