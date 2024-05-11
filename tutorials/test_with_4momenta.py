@@ -8,9 +8,7 @@ import math
 eventfile = sys.argv[1]
 F=lhe_parser.EventFile(eventfile)
 
-#################################################################
-
-# create vectors for storage
+# initialize vectors for storage
 top_momenta = []
 antitop_momenta = []
 wplus_momenta = []
@@ -57,7 +55,7 @@ for i in range(len(top_momenta)):
     # invariant mass
     print('\nIn any frame, p^2=m^2 (invariant mass):')
     print(math.sqrt(top_momenta[i]*top_momenta[i])) 
-    # in the top frame, W+ and b are expected to have 
+    # in the top frame, W+ and b are expected to have equal and opposite spatial parts (they come from a 2-body decay)
     bottom_comf = b_momenta[i].boost_to_restframe(top_momenta[i])
     wplus_comf = wplus_momenta[i].boost_to_restframe(top_momenta[i])
     print('\nb and W+ momenta in the top rest frame:')
