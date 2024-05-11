@@ -3,7 +3,7 @@
 ## [Madgraph homepage](http://madgraph.phys.ucl.ac.be/index.html)
 
 ### [Running madgraph](https://www.niu.edu/spmartin/madgraph/)
-### [Turorial](https://www.niu.edu/spmartin/madgraph/madtutor.html)
+### [Tutorial](https://www.niu.edu/spmartin/madgraph/madtutor.html)
 ### [Syntax](https://www.niu.edu/spmartin/madgraph/madsyntax.html)
 
 ## LHE event file
