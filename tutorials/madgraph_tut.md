@@ -60,7 +60,7 @@
   </head>
 
   * In the present directory there is a short test that reads an event file and does some operations with the 4-momenta of the particles.
-    For execution, paste the file to `RESULTS/bin`, go to `RESULTS` and type in the terminal:
+    For execution, paste the file to `RESULTS/bin`, go to `RESULTS` and type in the terminal:  
     `python ./bin/test_with_4momenta.py ./Events/run_01/unweighted_events.lhe`
   
 
