@@ -1,7 +1,8 @@
-# Fast guide to `madgraph`
+# Fast guide to `madgraph` and reading events
 
-### [Madgraph homepage](http://madgraph.phys.ucl.ac.be/index.html)
-### [](https://www.niu.edu/spmartin/madgraph/)
+## [Madgraph homepage](http://madgraph.phys.ucl.ac.be/index.html)
+
+### [Running madgraph](https://www.niu.edu/spmartin/madgraph/)
 ### [Turorial](https://www.niu.edu/spmartin/madgraph/madtutor.html)
 ### [Syntax](https://www.niu.edu/spmartin/madgraph/madsyntax.html)
 
@@ -57,5 +58,9 @@
               </mgrwt>  
 
   </head>
+
+  * In the present directory there is a short test that reads an event file and does some operations with the 4-momenta of the particles.
+    For execution, paste the file to `RESULTS/bin`, go to `RESULTS` and type in the terminal:
+    `./bin/test_with_4momenta.py ./Events_run01/unweighted_events.lhe`
   
 
