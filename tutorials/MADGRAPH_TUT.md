@@ -8,7 +8,7 @@
 
 ## LHE event file
 
- * In every directory `RESULTS` produced by a simulation of `madgraph`, there is also a parser, called `RESULTS/bin/internal/lhe_parser.py`, which is a python library tailored for `.lhe` files.
+ * In every directory `RESULTS` produced by a simulation of `madgraph`, there is also a parser, called `RESULTS/bin/internal/lhe_parser.py`, which is a python library tailored for `.lhe` files. < br/>
    Each event is a list of particles, identified by the first number in each row (see `number_scheme_montecarlorpp.pdf` for reference), each of which has defined properties, like four-momentum and mass. For example, 6 stands for a top quark $t$ and -13 is an anti-muon $\mu^+$.
    The full legend (taken from the embedded parser) for a single line in an event is:
 
