@@ -61,6 +61,7 @@ def main():
     #############################################################
     # parse the file event by event
     #############################################################
+    
     print(f"Processing the events...")
     with alive_bar(n_events, force_tty=True) as bar:
         for iev, event in enumerate(F):
