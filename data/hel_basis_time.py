@@ -89,7 +89,7 @@ def main():
                 if part.pid==11 or part.pid==13 or part.pid==15:
                     bool_lep = True
                     lep_momenta.append(lhe_parser.FourMomentum(part))
-                # check whether an event lacks one of the particles above
+            # check whether an event lacks one of the particles above
             if bool_top==False or bool_antitop==False or bool_antilep==False or bool_lep==False:
                 print(f"Particle missing in event number {iev}!")
             
