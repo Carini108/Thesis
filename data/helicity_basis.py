@@ -5,89 +5,162 @@ import sys
 import math
 import numpy as np
 
-# Note: returns angle in radians
+# FUNCTIONS
+## function that returns angle between vectors (in radians)
 def angle(v, w): return np.arccos(v.dot(w)/(np.linalg.norm(v)*np.linalg.norm(w)))
-
-# open and load file of events
-eventfile = sys.argv[1]
-F=lhe_parser.EventFile(eventfile)
+def cosine(v, w): return v.dot(w)/(np.linalg.norm(v)*np.linalg.norm(w))
 
 #################################################################
+#################################################################
+#################################################################
 
-# create vectors for storage
-
-top_momenta = []
-antilep_momenta = []
-antitop_momenta = []
-lep_momenta = []
-
-# boosting and helicity basis
-
-t_antit_sum = []
-p = []
-k = []
-r = []
-n = []
-antik = []
-antir = []
-antin = []
-
-# entanglement matrices
-
-
-# parse the file event by event
-for iev, event in enumerate(F):
-
-    # find particles in the event file (event is a list)
-    for part in event:
-
-        ################    top & anti-top    ################
-        # top
-        if part.pid == 6:
-            top_momenta.append(lhe_parser.FourMomentum(part))
-        # antitop
-        if part.pid == -6:
-            antitop_momenta.append(lhe_parser.FourMomentum(part))
-        ################    anti-lepton & lepton    ################
-        # anti-lepton
-        bool_antilep = part.pid==-11 or part.pid==-13 or part.pid==-15
-        if bool_antilep:
-            antilep_momenta.append(lhe_parser.FourMomentum(part))
-        # lepton
-        bool_lep = part.pid==11 or part.pid==13 or part.pid==15
-        if bool_lep:
-            lep_momenta.append(lhe_parser.FourMomentum(part))
-        # CHECK WHETHER EVERY EVENT HAS EVERY PARTICLE ABOVE IN IT
+def main():
 
     #############################################################
-    # BOOST IN THE C.O.M.F. OF tt~
-    # comf
-    t_antit_sum.append(top_momenta[iev]+antitop_momenta[iev])
-    print(t_antit_sum[iev])
-    print(top_momenta[iev])
-    print(antitop_momenta[iev])
-    # boosts
-    top_momenta[iev] = top_momenta[iev].boost_to_restframe(t_antit_sum[iev])
-    antitop_momenta[iev] = antitop_momenta[iev].boost_to_restframe(t_antit_sum[iev])
-    antilep_momenta[iev] = antilep_momenta[iev].boost_to_restframe(t_antit_sum[iev])
-    lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(t_antit_sum[iev])
-    # DEFINE HELICITY BASIS
-    ## beam direction
-    p.append(np.array([0,0,1]))
-    ## top direction
-    k.append(np.array([top_momenta[iev].px, top_momenta[iev].py, top_momenta[iev].pz]))
-    k[iev] = k[iev]/np.linalg.norm(k[iev]) # normalization
-    ## on the k,p plane
-    theta = angle(p[iev],k[iev])
-    r.append((p[iev]-k[iev]*np.cos(theta))/np.sin(theta))
-    ## orthogonal to k and r
-    n.append(np.cross(k[iev],r[iev]))
+    # open and load file of events
+    #############################################################
+    # open and load file of events
+    eventfile = sys.argv[1]
+    F=lhe_parser.EventFile(eventfile)
 
-    ##############
-    # BOOST IN THE C.O.M.F. OF SINGLE t / SINGLE t~
-    antilep_momenta[iev] = antilep_momenta[iev].boost_to_restframe(top_momenta[iev])
-    lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(antitop_momenta[iev])
+    ## initialize vectors for storage
+    top_momenta = []
+    antilep_momenta = []
+    antitop_momenta = []
+    lep_momenta = []
+    ## vectors for boosting and constructing helicity basis
+    t_antit_sum = [] # 
+    p = [] # beam direction
+    ## top rest frame helicity basis (orthonormal)
+    k = [] # top direction
+    r = [] # on (p,k) plane
+    n = [] # orthogonal to (p,k) plane
+    """## anti-top rest frame helicity basis
+    antik = [] # anti-top direction
+    antir = [] 
+    antin = []"""
+    ## initialize entanglement matrices
+    C_kk = 0
+    C_rr = 0
+    C_nn = 0
+    err_kk = 0
+    err_rr = 0
+    err_nn = 0
+
+    ## initialize x_ij
+    x_kk = []
+    x_rr = []
+    x_nn = []
+
+    #############################################################
+    # parse the file event by event
+    #############################################################
+
+    for iev, event in enumerate(F):
+        ## find particles in the event file ('event' type is a list)
+        bool_top = False
+        bool_antitop = False
+        bool_antilep = False
+        bool_lep = False
+        for part in event:
+            ################    top & anti-top    ################
+            # top
+            if part.pid == 6: 
+                bool_top = True
+                top_momenta.append(lhe_parser.FourMomentum(part))
+            # antitop
+            if part.pid == -6:
+                bool_antitop = True
+                antitop_momenta.append(lhe_parser.FourMomentum(part))
+            ################    anti-lepton & lepton    ################
+            # anti-lepton
+            if part.pid==-11 or part.pid==-13 or part.pid==-15:
+                bool_antilep = True
+                antilep_momenta.append(lhe_parser.FourMomentum(part))
+            # lepton
+            if part.pid==11 or part.pid==13 or part.pid==15:
+                bool_lep = True
+                lep_momenta.append(lhe_parser.FourMomentum(part))
+            ## check whether an event lacks one of the particles above
+        if bool_top==False or bool_antitop==False or bool_antilep==False or bool_lep==False:
+            print(f"Particle missing in event number {iev}!")
+        
+        #############################################################
+        # perform boosts and build helicity bases
+        # note: boosts do not commute!
+        #############################################################
+
+        # BOOST TO C.O.M.F. OF tt~
+
+        ## c.o.m. momentum
+        t_antit_sum.append(top_momenta[iev]+antitop_momenta[iev])
+
+        ## perform Lorentz boosts on all momenta
+        top_momenta[iev] = top_momenta[iev].boost_to_restframe(t_antit_sum[iev])
+        antitop_momenta[iev] = antitop_momenta[iev].boost_to_restframe(t_antit_sum[iev])
+        antilep_momenta[iev] = antilep_momenta[iev].boost_to_restframe(t_antit_sum[iev])
+        lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(t_antit_sum[iev])
+
+        # DEFINE HELICITY BASES
+
+        ## beam direction
+        if top_momenta[iev].pz*t_antit_sum[iev].pz>0:
+            p.append(np.array([0,0,1]))
+        else:
+            p.append(np.array([0,0,-1]))
+
+        ## top direction
+        k.append(np.array([top_momenta[iev].px, top_momenta[iev].py, top_momenta[iev].pz]))
+        k[iev] = k[iev]/np.linalg.norm(k[iev]) # normalization
+        ## on the (k,p) plane
+        theta = angle(p[iev],k[iev])
+        r.append((p[iev]-k[iev]*np.cos(theta))/np.sin(theta))
+        ## orthogonal to k and r
+        n.append(np.cross(k[iev],r[iev]))
+
+        """## anti-top direction
+        antik.append(np.array([antitop_momenta[iev].px, antitop_momenta[iev].py, antitop_momenta[iev].pz]))
+        antik[iev] = antik[iev]/np.linalg.norm(antik[iev]) # normalization
+        ## on the (antik,p) plane
+        antitheta = angle(p[iev],antik[iev])
+        antir.append((p[iev]-antik[iev]*np.cos(antitheta))/np.sin(antitheta))
+        ## orthogonal to antik and antir
+        antin.append(np.cross(antik[iev],antir[iev]))"""
+        
+        # BOOST FROM C.O.M.F. TO REST FRAME OF SINGLE t / SINGLE t~
+
+        antilep_momenta[iev] = antilep_momenta[iev].boost_to_restframe(top_momenta[iev])
+        lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(antitop_momenta[iev])
+
+    #############################################################
+    # calculate the C matrix
+    #############################################################
     
-for i in range(len(top_momenta)):
-    print(top_momenta[i])
-    if i==0: break # stops at 1st element
+        ## get the spatial component to project on the helicity basis
+        antilep_3momenta = np.array([antilep_momenta[iev].px, antilep_momenta[iev].py, antilep_momenta[iev].pz])
+        lep_3momenta = np.array([lep_momenta[iev].px, lep_momenta[iev].py, lep_momenta[iev].pz])
+        ## calculate the x_ii
+        if t_antit_sum[iev]*t_antit_sum[iev]>500**2:
+            continue
+        x_kk.append(-9.*cosine(antilep_3momenta, k[iev])*cosine(lep_3momenta, k[iev]))
+        x_rr.append(-9.*cosine(antilep_3momenta, r[iev])*cosine(lep_3momenta, r[iev]))
+        x_nn.append(-9.*cosine(antilep_3momenta, n[iev])*cosine(lep_3momenta, n[iev]))
+    
+    print(len(x_kk))
+
+    C_kk = np.mean(x_kk)
+    err_kk = stat.stdev(x_kk)/math.sqrt(len(x_kk))
+    print(f"{C_kk} +- {err_kk}")
+    C_rr = np.mean(x_rr)
+    err_rr = stat.stdev(x_rr)/math.sqrt(len(x_rr))
+    print(f"{C_rr} +- {err_rr}")
+    C_nn = np.mean(x_nn)
+    err_nn = stat.stdev(x_nn)/math.sqrt(len(x_nn))
+    print(f"{C_nn} +- {err_nn}")
+
+    print(C_kk+C_rr)
+
+    print(f"C = {abs(C_kk+C_rr)-C_nn}")
+
+if __name__ == "__main__":
+    main()
