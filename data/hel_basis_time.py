@@ -5,14 +5,13 @@
 # managing files interactively
 import sys
 from alive_progress import alive_bar
-import time
 # parser for Les Houches Events file
 import internal.lhe_parser as lhe_parser
 # statistics and vectors
 import math
 import statistics as stat
 import numpy as np
-print('\nLibraries properly imported\n')
+print('Libraries properly imported')
 
 # FUNCTIONS
 # function that returns angle between vectors (in radians)
@@ -29,6 +28,7 @@ def main():
     # open and load file of events
     eventfile = sys.argv[1]
     n_events = int(sys.argv[2])
+    E_thres = 500.0 # energy threshold in GeV
     F=lhe_parser.EventFile(eventfile)
     # initialize vectors for storage
     top_momenta = []
@@ -61,8 +61,8 @@ def main():
     #############################################################
     # parse the file event by event
     #############################################################
+    print(f"Processing the events...")
     with alive_bar(n_events, force_tty=True) as bar:
-        print(f"Processing the events...")
         for iev, event in enumerate(F):
             # find particles in the event file ('event' type is a list)
             bool_top = False
@@ -140,14 +140,14 @@ def main():
             lep_momenta[iev] = lep_momenta[iev].boost_to_restframe(antitop_momenta[iev])
 
             #############################################################
-            # calculate the C matrix
+            # prepare to calculate the C matrix
             #############################################################
         
             # get the spatial component to project on the helicity basis
             antilep_3momenta = np.array([antilep_momenta[iev].px, antilep_momenta[iev].py, antilep_momenta[iev].pz])
             lep_3momenta = np.array([lep_momenta[iev].px, lep_momenta[iev].py, lep_momenta[iev].pz])
             # calculate the x_ii
-            if t_antit_sum[iev]*t_antit_sum[iev]>500**2:
+            if t_antit_sum[iev]*t_antit_sum[iev]>E_thres**2:
                 continue
             x_kk.append(-9.*cosine(antilep_3momenta, k[iev])*cosine(lep_3momenta, k[iev]))
             x_rr.append(-9.*cosine(antilep_3momenta, r[iev])*cosine(lep_3momenta, r[iev]))
@@ -155,22 +155,27 @@ def main():
 
             # progress bar
             bar()
-    
-    print(f"len(x_kk)")
 
+    # end of for loop
+    print(f"{len(x_kk)} events found below E<{E_thres} threshold")
+
+    # determine matrix elements
+    print(f"From the kinematic calculations follows that:")
     C_kk = np.mean(x_kk)
     err_kk = stat.stdev(x_kk)/math.sqrt(len(x_kk))
-    print(f"{C_kk} +- {err_kk}")
+    print(f"C_kk = {C_kk} +- {err_kk}")
     C_rr = np.mean(x_rr)
     err_rr = stat.stdev(x_rr)/math.sqrt(len(x_rr))
-    print(f"{C_rr} +- {err_rr}")
+    print(f"C_rr = {C_rr} +- {err_rr}")
     C_nn = np.mean(x_nn)
     err_nn = stat.stdev(x_nn)/math.sqrt(len(x_nn))
-    print(f"{C_nn} +- {err_nn}")
+    print(f"C_nn = {C_nn} +- {err_nn}")
 
-    print(C_kk+C_rr)
-
-    print(f"C = {abs(C_kk+C_rr)-C_nn}")
+    # find entanglemente
+    print(C_kk+C_rr) # at threshold, this quantity should be negative
+    C = abs(C_kk+C_rr)-C_nn
+    err_C = math.sqrt(err_kk**2+err_nn**2+err_rr**2)
+    print(f"C = {C} +- {err_C}")
 
 if __name__ == "__main__":
     main()
