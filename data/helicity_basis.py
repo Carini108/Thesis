@@ -167,7 +167,7 @@ def main():
     err_nn = stat.stdev(x_nn)/math.sqrt(len(x_nn))
     print(f"C_nn = {C_nn} +- {err_nn}")
 
-    # find entanglemente
+    # find entanglement
     print(C_kk+C_rr) # at threshold, this quantity should be negative
     C = abs(C_kk+C_rr)-C_nn
     err_C = math.sqrt(err_kk**2+err_nn**2+err_rr**2)
