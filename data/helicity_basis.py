@@ -26,7 +26,6 @@ def main():
 
     # open and load file of events
     eventfile = sys.argv[1]
-    n_events = int(sys.argv[2])
     E_thres = 500.0 # energy threshold in GeV
     F=lhe_parser.EventFile(eventfile)
     # initialize vectors for storage
@@ -123,16 +122,16 @@ def main():
         r.append((p[iev]-k[iev]*np.cos(theta))/np.sin(theta))
         # orthogonal to k and r
         n.append(np.cross(k[iev],r[iev]))
-
-        """# anti-top direction
+        """
+        # anti-top direction
         antik.append(np.array([antitop_momenta[iev].px, antitop_momenta[iev].py, antitop_momenta[iev].pz]))
         antik[iev] = antik[iev]/np.linalg.norm(antik[iev]) # normalization
         # on the (antik,p) plane
         antitheta = angle(p[iev],antik[iev])
         antir.append((p[iev]-antik[iev]*np.cos(antitheta))/np.sin(antitheta))
         # orthogonal to antik and antir
-        antin.append(np.cross(antik[iev],antir[iev]))"""
-        
+        antin.append(np.cross(antik[iev],antir[iev]))
+        """
         # BOOST FROM C.O.M.F. TO REST FRAME OF SINGLE t / SINGLE t~
 
         antilep_momenta[iev] = antilep_momenta[iev].boost_to_restframe(top_momenta[iev])
