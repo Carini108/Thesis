@@ -32,7 +32,7 @@ def main():
     eventfile = sys.argv[1]
     n_events = int(sys.argv[2])
     # skim events with too high energy
-    E_thres = 400.0 # energy threshold in GeV
+    E_thres = 1100.0 # energy threshold in GeV
     # read event file
     F = lhe_parser.EventFile(eventfile)
 
@@ -242,7 +242,7 @@ def main():
 
     # Adjust layout and save plots
     plt.tight_layout()
-    plt.savefig(f'x_histos_Ethr{E_thres}.pdf')
+    plt.savefig(f'x_histos_Ethr{E_thres}_nev{n_events}.pdf')
 
     #############################################################
     # 8                           plot 2D histogram using pcolorù
@@ -252,10 +252,10 @@ def main():
     plt.hist2d(THETA, MASS, bins=(10,int((E_thres-300.0)/100)), range=([0.0,0.5],[300.0,E_thres]))
     plt.xlabel('theta/pi')
     plt.ylabel('m')
-    plt.title(f'$E_thr$={E_thres}')
+    plt.title(f'$E threshold ={E_thres}$')
     cbar = plt.colorbar()
     cbar.ax.set_ylabel('Counts')
-    plt.savefig(f'2Dhistograms_Ethr{E_thres}.pdf') 
+    plt.savefig(f'2Dhistograms_Ethr{E_thres}_nev{n_events}.pdf') 
 
     #############################################################
     # 9                            plot histograms of the cosines
@@ -285,6 +285,7 @@ def main():
     plt.subplot(2, 3, 3)
     plt.hist(np.array(cos_n), bins=6, color='r', alpha=0.7, edgecolor='black', density='True')
     cos_n.clear()
+    plt.title('cos_n')
     plt.grid()
     plt.xlabel('values')
     plt.ylabel('frequency')
@@ -311,13 +312,14 @@ def main():
     plt.subplot(2, 3, 6)
     plt.hist(np.array(cos_antin), bins=6, color='r', alpha=0.7, edgecolor='black', density='True')
     cos_antin.clear()
+    plt.title('cos_antin')
     plt.grid()
     plt.xlabel('values')
     plt.ylabel('frequency')
 
     # adjust layout and save plots
     plt.tight_layout()
-    plt.savefig(f'cos_histos_Ethr{E_thres}.pdf')    
+    plt.savefig(f'cos_histos_Ethr{E_thres}_nev{n_events}.pdf')    
 
 if __name__ == "__main__":
     main()
