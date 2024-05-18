@@ -235,7 +235,7 @@ def main():
     plt.subplot(1, 3, 3)
     plt.hist(np.array(x_nn), bins=6, color='r', alpha=0.7, edgecolor='black', density='True')
     x_nn.clear()
-    plt.title('x_rr')
+    plt.title('x_nn')
     plt.grid()
     plt.xlabel('values')
     plt.ylabel('frequency')
