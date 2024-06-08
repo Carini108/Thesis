@@ -1,0 +1,154 @@
+\documentclass[12pt,a4paper, openright, twoside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%\usepackage[style=ieee]{biblatex}
+\usepackage[style=phys]{biblatex}
+\addbibresource{biblio.bib}
+
+\usepackage{csquotes}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{blindtext}  
+\usepackage{changepage}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{amsmath} 
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{tocbibind}
+\usepackage{gensymb}
+\usepackage[width=0.7\textwidth]{caption}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amssymb} 
+\usepackage{appendix}
+\usepackage{enumitem}
+
+\pdfminorversion=4
+\usepackage[a-1b]{pdfx}
+
+\tikzstyle{spring2}=[thick,decorate,decoration={zigzag,pre length=0.2cm,post
+  length=0.2cm,segment length=6}]
+\tikzstyle{spring}=[thick,decorate,decoration={zigzag,pre length=0.2cm,post
+  length=0.2cm,segment length=10}]
+
+\pgfmathsetmacro{\mincos}{-1}
+\pgfmathsetmacro{\maxcos}{1}
+
+\definecolor{lightblue1}{rgb}{0.28, 0.85, 0.9}
+\definecolor{lightblue2}{rgb}{0.66, 0.98, 1.0}
+\definecolor{lightblue3}{rgb}{0.67, 0.78, 0.98}
+
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{logo_unimi} \\[1cm]
+        {\Large Dipartimento di Fisica A. Pontremoli} \\[0.6cm]
+        {\Large Corso di Laurea Triennale in Fisica} \\[3cm]
+        {\Huge \textbf{Angular Observables}} \\
+        {\Huge \textbf{and Correlations}} \\
+        {\Huge \textbf{in Leptonic Top-Quark Pair}} \\
+        {\Huge \textbf{Production and Decay:}} \\
+        {\Huge \textbf{a Probe of Entanglement}} \\[2cm]
+        
+        \vfill
+        
+        \begin{minipage}[t]{0.45\textwidth}
+            \begin{flushleft} \large
+                Advisor:\\
+                \textbf{Prof. Marco Zaro}
+            \end{flushleft}
+        \end{minipage}
+        \begin{minipage}[t]{0.45\textwidth}
+            \vspace{3cm} 
+            \begin{flushright} \large
+                Candidate: \\
+                \textbf{Stefano Davide Carini} \\
+                Student ID: 966108
+            \end{flushright}
+        \end{minipage}
+        
+        \vfill
+        
+        {\large Academic Year \\ 2023-24}
+        
+    \end{center}
+\end{titlepage}
+
+\setstretch{1.4} 
+\newpage
+\mbox{}
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+\begin{center}
+    {\Huge \textbf{Angular Observables}} \\
+    {\Huge \textbf{and Correlations}} \\
+    {\Huge \textbf{in Leptonic Top-Quark Pair}} \\
+    {\Huge \textbf{Production and Decay:}} \\
+    {\Huge \textbf{a Probe of Entanglement}} \\ [1cm]
+    
+    \large Stefano Davide Carini \\ 
+    Dipartimento di Fisica, Università degli Studi di Milano\\
+    Via Celoria 16, 20133 Milano, Italia\\
+    XX luglio 2024
+        \vspace{1.8cm}
+    
+    \begin{singlespace}
+        \normalsize \textbf{Abstract}
+        \\
+        \begin{adjustwidth}{12mm}{12mm}
+            \normalsize
+            \noindent In this work we ...
+        \end{adjustwidth}
+        
+        \vspace{1cm} 
+    \end{singlespace}
+\end{center}
+
+
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+
+\chapter{Introduction} \label{introduction}
+\input{intro.tex}
+\chapter{The Top Quark} 
+\input{top.tex}
+\newpage
+\chapter{Simulations of Scattering Processes at the LHC}
+\input{simul.tex}
+\newpage
+\chapter{Angular Observables and Correlations in Top-Pair Production}
+\input{analysis.tex}
+\newpage
+\chapter{Conclusions and Outlook}
+\input{concl.tex}
+
+\printbibliography
+
+\chapter*{Ringraziamenti}
+
+\textit{Un accorato ringraziamento è rivolto al prof.\,Manini, la cui disponibilità e professionalità hanno reso staordinaria la fine di questo percorso accademico.}
+\\
+    \textit{Ringrazio i miei amati nonni e la mia famiglia tutta; il vostro sostegno e amore sono e saranno sempre impareggiabili.}
+    \\
+    \textit{Grazie a tutti i ragazzi di Fisica, una seconda famiglia.}
+    \\
+    \textit{Un accorato ringraziamento è rivolto al prof.\,Manini, la cui disponibilità e professionalità hanno reso staordinaria la fine di questo percorso accademico.}
+    \vspace{1cm}
+    \\
+    \textit{Grazie a via Celoria 16, 
+    \\
+    mia seconda casa, 
+    \\
+    sempre.}
+    \vspace{0.5cm}
+    \\
+    \begin{flushright}
+        \textit{Stefano}
+    \end{flushright}
+\end{document}
